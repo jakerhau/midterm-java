@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/eror.css}">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="flex justify-center items-center min-h-screen bg-gray-100 error-content py-10">
+        <div class="container mx-auto">
+            <div class="flex justify-center">
+                <div class="text-center">
+                    <h3 class="text-9xl font-light text-gray-800"></h3>
+                    <div class="im-sheep inline-block relative mt-10">
+                        <div class="top relative animate-bounce">
+                            <div class="body w-28 h-28 rounded-full bg-blue-600 relative -mr-12"></div>
+                            <div class="head w-20 h-20 rounded-full bg-gray-800 relative transform rotate-30">
+                                <div class="im-eye one w-4 h-4 rounded-full bg-white absolute top-7 right-1">
+                                    <div class="absolute w-1/2 h-1/2 rounded-full bg-black bottom-1 right-1"></div>
+                                </div>
+                                <div class="im-eye two w-4 h-4 rounded-full bg-white absolute top-7 right-10">
+                                    <div class="absolute w-1/2 h-1/2 rounded-full bg-black bottom-1 right-1"></div>
+                                </div>
+                                <div class="im-ear one w-10 h-6 bg-gray-800 rounded-full absolute left-0 top-2 transform -rotate-30">
+                                </div>
+                                <div class="im-ear two w-10 h-6 bg-gray-800 rounded-full absolute right-0 top-0 transform rotate-20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="im-legs absolute top-full left-2 flex space-x-1 z-0">
+                            <div class="im-leg bg-gray-900 w-2 h-10"></div>
+                            <div class="im-leg bg-gray-900 w-2 h-10"></div>
+                            <div class="im-leg bg-gray-900 w-2 h-10"></div>
+                            <div class="im-leg bg-gray-900 w-2 h-10"></div>
+                        </div>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-blue-900 mt-8" th:text="${status}">Status</h4>
+                    <p class="text-gray-600 mt-2" th:text="${message}">Message</p>
+                    <a th:href="@{/}" class="btn btn-primary btn-round bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-full mt-6 shadow-md">
+                        Quay lại trang chủ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

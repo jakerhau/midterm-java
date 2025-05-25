@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main-content})}">
+<head>
+    <title>Home - E-Commerce Store</title>
+</head>
+<body>
+    <div th:fragment="main-content">
+        <!-- Hero Section -->
+        <div class="jumbotron bg-light p-5 rounded-3 mb-4">
+            <h1 class="display-4">Welcome to Our Store</h1>
+            <p class="lead">Discover amazing products at great prices</p>
+            <a class="btn btn-primary btn-lg" href="/products" role="button">Shop Now</a>
+        </div>
+
+        <!-- Featured Categories -->
+        <h2 class="mb-4">Shop by Category</h2>
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Electronics">
+                    <div class="card-body">
+                        <h5 class="card-title">Electronics</h5>
+                        <p class="card-text">Latest gadgets and devices</p>
+                        <a href="/products?category=electronics" class="btn btn-outline-primary">Browse</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Fashion">
+                    <div class="card-body">
+                        <h5 class="card-title">Fashion</h5>
+                        <p class="card-text">Trendy clothing and accessories</p>
+                        <a href="/products?category=fashion" class="btn btn-outline-primary">Browse</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Home & Living">
+                    <div class="card-body">
+                        <h5 class="card-title">Home & Living</h5>
+                        <p class="card-text">Everything for your home</p>
+                        <a href="/products?category=home" class="btn btn-outline-primary">Browse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Products -->
+        <h2 class="mb-4">Featured Products</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4" th:each="product : ${featuredProducts}">
+                <div class="card product-card h-100">
+                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+                        <p class="card-text" th:text="${product.price}">$0.00</p>
+                        <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

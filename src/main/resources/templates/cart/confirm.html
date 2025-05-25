@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Confirm information</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Đặt hàng thành công!</h4>
+            <p>Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn sớm nhất có thể.</p>
+        </div>
+        
+        <h2>Order Confirmation</h2>
+        <div class="row">
+            <!-- Customer Information -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Customer Information</h3>
+                        <div class="mb-3">
+                            <strong>Name:</strong>
+                            <span th:text="${customerName}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Phone:</strong>
+                            <span th:text="${customerPhone}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Address:</strong>
+                            <span th:text="${customerAddress}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Details -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Order Details</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${order.orderDetails}">
+                                    <td th:text="${item.product.productName}">Product Name</td>
+                                    <td th:text="${item.quantity}">Quantity</td>
+                                    <td th:text="${#numbers.formatDecimal(item.getTotalPrice, 0, 'POINT', 2, 'COMMA')}">Price</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-end"><strong>Total:</strong></td>
+                                    <td th:text="${#numbers.formatDecimal(order.getTotalOrderPrice, 0, 'POINT', 2, 'COMMA')}">Total Price</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                        <div class="text-center mt-4">
+                            <a href="/products" class="btn btn-primary">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

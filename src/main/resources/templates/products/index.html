@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Products</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Toast Container -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div th:if="${message}" th:classappend="${toastType}" id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto" th:text="${toastType == 'success' ? 'Success' : (toastType == 'error' ? 'Error' : (toastType == 'warning' ? 'Warning' : 'Info'))}">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" th:text="${message}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Filter Section -->
+            <div class="col-md-3">
+                <div class="filter-section">
+                    <h4>Filters</h4>
+                    <form th:action="@{/products}" method="get">
+                        <!-- Category Filter -->
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="category">
+                                <option value="">All Categories</option>
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat.id}"
+                                        th:text="${cat.nameCategory}"
+                                        th:selected="${param.category != null and param.category[0] == cat.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Brand Filter -->
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" name="brand">
+                                <option value="">All Brands</option>
+                                <option th:each="brand : ${brands}"
+                                        th:value="${brand}"
+                                        th:text="${brand}"
+                                        th:selected="${param.brand != null and param.brand[0] == brand}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Color Filter -->
+                        <div class="mb-3">
+                            <label class="form-label">Color</label>
+                            <select class="form-select" name="color">
+                                <option value="">All Colors</option>
+                                <option th:each="color : ${colors}"
+                                        th:value="${color}"
+                                        th:text="${color}"
+                                        th:selected="${param.color != null and param.color[0] == color}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-3">
+                            <label class="form-label">Price Range</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" name="minPrice" placeholder="Min" 
+                                       th:value="${param.minPrice != null ? param.minPrice[0] : ''}"
+                                       min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" name="maxPrice" placeholder="Max" 
+                                       th:value="${param.maxPrice != null ? param.maxPrice[0] : ''}"
+                                       min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <!-- Sort Options -->
+                        <div class="mb-3">
+                            <label class="form-label">Sort By</label>
+                            <select class="form-select" name="sortBy">
+                                <option value="id" th:selected="${param.sortBy != null and param.sortBy[0] == 'id'}">Default</option>
+                                <option value="price" th:selected="${param.sortBy != null and param.sortBy[0] == 'price'}">Price</option>
+                                <option value="productName" th:selected="${param.sortBy != null and param.sortBy[0] == 'productName'}">Name</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sort Direction</label>
+                            <select class="form-select" name="sortDir">
+                                <option value="asc" th:selected="${param.sortDir != null and param.sortDir[0] == 'asc'}">Ascending</option>
+                                <option value="desc" th:selected="${param.sortDir != null and param.sortDir[0] == 'desc'}">Descending</option>
+                            </select>
+                        </div>
+
+                        <!-- Hidden page parameter -->
+                        <input type="hidden" name="page" th:value="${param.page != null ? param.page[0] : '0'}">
+                        <input type="hidden" name="size" th:value="${param.size != null ? param.size[0] : '9'}">
+
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4 mb-4" th:each="product : ${products}">
+                        <div class="card h-100 product-card">
+                            <img th:src="${product.imageUrl}" class="card-img-top" th:alt="${product.productName}">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.productName}">Product Name</h5>
+                                <p class="card-text" th:text="${product.description}">Product Description</p>
+                                <p class="card-text">
+                                    <strong th:text="${'$' + #numbers.formatDecimal(product.price, 1, 2)}">$0.00</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        Brand: <span th:text="${product.brand}"></span>
+                                        <br>
+                                        Color: <span th:text="${product.color}"></span>
+                                    </small>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-primary">View Details</a>
+                                    <form th:action="@{/cart/add}" method="post" class="d-inline">
+                                        <input type="hidden" name="productId" th:value="${product.id}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav th:if="${totalPages > 1}" aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <!-- First Page -->
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/products(page=0,size=${pageSize},category=${param.category},brand=${param.brand},color=${param.color},minPrice=${param.minPrice},maxPrice=${param.maxPrice},sortBy=${sortBy},sortDir=${sortDir})}">
+                                <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </li>
+                        
+                        <!-- Previous Page -->
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/products(page=${currentPage - 1},size=${pageSize},category=${param.category},brand=${param.brand},color=${param.color},minPrice=${param.minPrice},maxPrice=${param.maxPrice},sortBy=${sortBy},sortDir=${sortDir})}">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+
+                        <!-- Page Numbers -->
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" 
+                               th:href="@{/products(page=${i},size=${pageSize},category=${param.category},brand=${param.brand},color=${param.color},minPrice=${param.minPrice},maxPrice=${param.maxPrice},sortBy=${sortBy},sortDir=${sortDir})}"
+                               th:text="${i + 1}">1</a>
+                        </li>
+
+                        <!-- Next Page -->
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/products(page=${currentPage + 1},size=${pageSize},category=${param.category},brand=${param.brand},color=${param.color},minPrice=${param.minPrice},maxPrice=${param.maxPrice},sortBy=${sortBy},sortDir=${sortDir})}">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+
+                        <!-- Last Page -->
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/products(page=${totalPages - 1},size=${pageSize},category=${param.category},brand=${param.brand},color=${param.color},minPrice=${param.minPrice},maxPrice=${param.maxPrice},sortBy=${sortBy},sortDir=${sortDir})}">
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this script at the end of the body -->
+    <th:block layout:fragment="scripts">
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const toastEl = document.getElementById('toast');
+                if (toastEl) {
+                    const toast = new bootstrap.Toast(toastEl, {
+                        autohide: true,
+                        delay: 3000
+                    });
+                    toast.show();
+                }
+            });
+        </script>
+    </th:block>
+</body>
+</html> 
