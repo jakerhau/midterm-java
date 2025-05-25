@@ -81,7 +81,7 @@ public class DataInitializer {
             chair.setPrice(149.99);
             chair.setColor(Color.BLACK);
             chair.setDescription("Ergonomic office chair with breathable mesh backrest");
-            chair.setImageUrl("https://i.pinimg.com/736x/45/8d/7d/458d7d00000000000000000000000000.jpg");
+            chair.setImageUrl("https://product.hstatic.net/1000213518/product/4_09bb91ab7cc942edb43c23e43fe20df5_master.jpg");
             chair.setCategory(home);
             productRepository.save(chair);
 
@@ -92,7 +92,7 @@ public class DataInitializer {
             desk.setPrice(299.99);
             desk.setColor(Color.GRAY);
             desk.setDescription("Adjustable standing desk with ergonomic design");
-            desk.setImageUrl("https://i.pinimg.com/736x/45/8d/7d/458d7d00000000000000000000000000.jpg");
+            desk.setImageUrl("https://standdesk.com.au/wp-content/uploads/2023/01/1500-mid-brown-black21.jpg");
             desk.setCategory(home);
             productRepository.save(desk);
 
@@ -103,7 +103,7 @@ public class DataInitializer {
             lamp.setPrice(49.99);
             lamp.setColor(Color.WHITE);
             lamp.setDescription("Table lamp with adjustable height and light intensity");
-            lamp.setImageUrl("https://i.pinimg.com/736x/45/8d/7d/458d7d00000000000000000000000000.jpg");
+            lamp.setImageUrl("https://images-cdn.ubuy.co.in/6533e6def47cdc6cd54deb17-small-table-lamp-for-bedroom-bedside.jpg");
             lamp.setCategory(home);
             productRepository.save(lamp);
 
@@ -114,7 +114,7 @@ public class DataInitializer {
             speaker.setPrice(79.99);
             speaker.setColor(Color.BLACK);
             speaker.setDescription("Bluetooth speaker with high-quality sound and long battery life");
-            speaker.setImageUrl("https://i.pinimg.com/736x/45/8d/7d/458d7d00000000000000000000000000.jpg");
+            speaker.setImageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsPr3U8NrUd3XKojUm8mZPtT7HbD81q9Z-hw&s");
             speaker.setCategory(home);
             productRepository.save(speaker);
 

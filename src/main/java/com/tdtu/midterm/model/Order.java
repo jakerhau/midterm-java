@@ -1,5 +1,6 @@
 package com.tdtu.midterm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,9 +20,9 @@ public class Order {
     private Long id;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<OrderDetail> orderDetails;
 
-    @JsonFormat(pattern = "dd/mm/yyyy")
     private LocalDate orderDate = LocalDate.now();
 
     @Column(nullable = false)
