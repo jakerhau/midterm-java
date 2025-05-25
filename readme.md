@@ -1,129 +1,161 @@
-# E-Commerce Store Application
+# Ứng Dụng Cửa Hàng Thương Mại Điện Tử
 
-A Spring Boot-based e-commerce application that demonstrates modern web development practices and patterns.
+Ứng dụng thương mại điện tử dựa trên Spring Boot thể hiện các phương pháp và mẫu thiết kế phát triển web hiện đại.
 
-## Software Development Principles, Patterns and Practices
+## Nguyên Tắc, Mẫu Thiết Kế và Thực Hành Phát Triển Phần Mềm
 
-### Architecture Patterns
-- **MVC Pattern**: Implements Model-View-Controller pattern using Spring MVC
-- **Repository Pattern**: Uses Spring Data JPA repositories for data access
-- **DTO Pattern**: Implements Data Transfer Objects for API responses
-- **Builder Pattern**: Utilizes builder pattern for response construction
+### Mẫu Kiến Trúc
+- **Mẫu MVC**: Triển khai mẫu Model-View-Controller sử dụng Spring MVC
+- **Mẫu Repository**: Sử dụng Spring Data JPA repositories để truy cập dữ liệu
+- **Mẫu DTO**: Triển khai Data Transfer Objects cho phản hồi API
+- **Mẫu Builder**: Sử dụng mẫu builder để xây dựng phản hồi
 
-### Design Principles
-- **SOLID Principles**: Follows Single Responsibility and Interface Segregation
-- **DRY (Don't Repeat Yourself)**: Implements reusable components and layouts
-- **Dependency Injection**: Uses Spring's @Autowired for dependency management
-- **Separation of Concerns**: Clear separation between controllers, services, and repositories
+### Nguyên Tắc Thiết Kế
+- **Nguyên Tắc SOLID**: Tuân thủ Single Responsibility và Interface Segregation
+- **DRY (Don't Repeat Yourself)**: Triển khai các thành phần và bố cục có thể tái sử dụng
+- **Dependency Injection**: Sử dụng @Autowired của Spring để quản lý phụ thuộc
+- **Phân Tách Mối Quan Tâm**: Phân tách rõ ràng giữa controllers, services và repositories
 
-### Best Practices
-- **Exception Handling**: Global exception handling using @ControllerAdvice
-- **Security**: Implements Spring Security for web security
-- **Database Migration**: Uses Hibernate auto-ddl for database schema management
-- **Responsive Design**: Bootstrap-based responsive UI
+### Thực Hành Tốt Nhất
+- **Xử Lý Ngoại Lệ**: Xử lý ngoại lệ toàn cục sử dụng @ControllerAdvice
+- **Bảo Mật**: Triển khai Spring Security cho bảo mật web
+- **Di Chuyển Cơ Sở Dữ Liệu**: Sử dụng Hibernate auto-ddl để quản lý schema cơ sở dữ liệu
+- **Thiết Kế Responsive**: Giao diện responsive dựa trên Bootstrap
 
-## Code Structure
+## Cấu Trúc Mã Nguồn
 
-## Technologies Used
+## Công Nghệ Sử Dụng
 - Java 17
 - Spring Boot 3.4.4
 - Spring Security
 - Spring Data JPA
 - Thymeleaf Template Engine
-- H2 Database (Development)
-- PostgreSQL (Production)
+- H2 Database (Môi trường phát triển)
+- PostgreSQL (Môi trường sản xuất)
 - Maven
 - Bootstrap 5.3
 - Docker
 
-## Getting Started
+## Bắt Đầu
 
-### Prerequisites
-- JDK 17 or later
+### Yêu Cầu
+- JDK 17 trở lên
 - Maven 3.8+
-- Docker (optional)
+- Docker (tùy chọn)
 
-### Local Setup
+### Cài Đặt Cục Bộ
 
-1. Clone the repository:
+1. Clone repository:
 ```bash
 git clone <repository-url>
 cd midterm
 ```
 
-2. Build the application:
+2. Build ứng dụng:
 ```bash
 mvn clean package
 ```
 
-3. Run the application:
+3. Chạy ứng dụng:
 ```bash
 java -jar target/midterm-0.0.1-SNAPSHOT.jar
 ```
 
-### Docker Setup
+### Cài Đặt Docker
 
-1. Build the Docker image:
+1. Build Docker image:
 ```bash
 docker build -t ecommerce-app .
 ```
 
-2. Run with Docker Compose:
+2. Chạy với Docker Compose:
 ```bash
 docker-compose up
 ```
 
-The application will be available at `http://localhost:8080`
+Ứng dụng sẽ có sẵn tại `http://localhost:8080`
+
+## Kiểm Thử (Testing)
+
+### Kiểm Thử Đơn Vị (Unit Testing)
+```bash
+# Chạy tất cả các bài kiểm thử đơn vị
+mvn test
+
+# Chạy kiểm thử cho một lớp cụ thể
+mvn test -Dtest=ProductServiceTest
+
+# Chạy kiểm thử với coverage report
+mvn test jacoco:report
+```
+
+### Kiểm Thử Tích Hợp (Integration Testing)
+```bash
+# Chạy tất cả các bài kiểm thử tích hợp
+mvn verify
+
+# Chạy kiểm thử tích hợp với profile cụ thể
+mvn verify -P integration-test
+```
+
+### Kiểm Thử API (API Testing)
+Sử dụng Postman collection trong thư mục `src/test/resources/postman` để kiểm thử các API endpoints.
+
+### Kiểm Thử Hiệu Suất (Performance Testing)
+```bash
+# Chạy kiểm thử hiệu suất với JMeter
+jmeter -n -t src/test/jmeter/ecommerce-test-plan.jmx
+```
 
 ## API Endpoints
 
-### Products API
+### API Sản Phẩm
 
-1. Get All Products
+1. Lấy Tất Cả Sản Phẩm
 ```bash
 curl -X GET http://localhost:8080/products
 ```
 
-2. Get Product by ID
+2. Lấy Sản Phẩm Theo ID
 ```bash
 curl -X GET http://localhost:8080/products/{id}
 ```
 
-3. Filter Products
+3. Lọc Sản Phẩm
 ```bash
 curl -X GET "http://localhost:8080/products?category=1&minPrice=10&maxPrice=100&brand=NIKE&color=WHITE"
 ```
 
-### Cart API
+### API Giỏ Hàng
 
-1. Add to Cart
+1. Thêm Vào Giỏ Hàng
 ```bash
 curl -X POST http://localhost:8080/cart/add \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "productId=1&quantity=1"
 ```
 
-2. Update Cart
+2. Cập Nhật Giỏ Hàng
 ```bash
 curl -X POST http://localhost:8080/cart/update \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "productId=1&quantity=2"
 ```
 
-3. Remove from Cart
+3. Xóa Khỏi Giỏ Hàng
 ```bash
 curl -X POST http://localhost:8080/cart/remove \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "productId=1"
 ```
 
-4. Clear Cart
+4. Xóa Giỏ Hàng
 ```bash
 curl -X POST http://localhost:8080/cart/clear
 ```
 
-### Response Format
-All API endpoints return responses in the following format:
+### Định Dạng Phản Hồi
+Tất cả các API endpoints trả về phản hồi theo định dạng sau:
 ```json
 {
     "code": 200,
@@ -133,9 +165,9 @@ All API endpoints return responses in the following format:
 }
 ```
 
-## Database Configuration
+## Cấu Hình Cơ Sở Dữ Liệu
 
-### Development (H2)
+### Môi Trường Phát Triển (H2)
 ```properties
 spring.datasource.url=jdbc:h2:mem:midterm
 spring.datasource.username=sa
@@ -143,7 +175,7 @@ spring.datasource.password=
 spring.datasource.driver-class-name=org.h2.Driver
 ```
 
-### Production (PostgreSQL)
+### Môi Trường Sản Xuất (PostgreSQL)
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/spring
 spring.datasource.username=postgres
@@ -151,8 +183,8 @@ spring.datasource.password=abc123
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
-## Security Configuration
-The application uses Spring Security with basic configuration allowing all requests (for demonstration purposes). In production, implement proper authentication and authorization
+## Cấu Hình Bảo Mật
+Ứng dụng sử dụng Spring Security với cấu hình cơ bản cho phép tất cả các yêu cầu (cho mục đích trình diễn). Trong môi trường sản xuất, cần triển khai xác thực và phân quyền phù hợp.
 
 
 
